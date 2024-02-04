@@ -3,6 +3,7 @@ package me.fullidle.customrankingpapi.customrankingpapi;
 import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class Ranking {
     private List<PlayerValue> rankingList;
     private final String name;
     private final String exceedRanking;
+    private final BukkitRunnable runnable;
 
     private Ranking(String key){
         this.name = key;
@@ -31,7 +33,13 @@ public class Ranking {
         judgmentPapi = plugin.getConfig().getString(key + ".judgmentPapi");
         format = plugin.getConfig().getString(key + ".format");
         exceedRanking = plugin.getConfig().getString(key + ".exceedRanking");
-        ranking();
+        runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                ranking();
+            }
+        };
+        runnable.runTaskTimerAsynchronously(plugin,0,20*10);
     }
 
     public String getRankingFormatInformation(int ranking){
@@ -45,6 +53,16 @@ public class Ranking {
                                         String.valueOf(ranking))
                 .replace("&", "§"));
     }
+    public String getNoDisconnectInformation(){
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < getRankingVolume(); i++) {
+            builder.append(getRankingFormatInformation(reverseOrder?rankingList.size()-(i+1):i));
+            if (i != getRankingVolume()-1){
+                builder.append("\n");
+            }
+        }
+        return builder.toString();
+    }
 
     public void ranking(){
         rankingList = Arrays.stream(Bukkit.getOfflinePlayers()).map(p ->
@@ -54,18 +72,18 @@ public class Ranking {
                                 PlaceholderAPI.setPlaceholders(p, judgmentPapi))))
                 .sorted(reverseOrder?comparing.reversed():comparing).collect(Collectors.toList());
     }
+    public void cancelRunnable(){
+        this.runnable.cancel();
+    }
 
     public static void clearCache(){
+        for (Ranking value : cache.values()) {
+            value.cancelRunnable();
+        }
         cache.clear();
     }
 
     public static Ranking getInstance(String key){
         return cache.computeIfAbsent(key, Ranking::new);
-    }
-
-    public static void updateAllRanking(){
-        for (Ranking value : Ranking.cache.values()) {
-            value.ranking();
-        }
     }
 }

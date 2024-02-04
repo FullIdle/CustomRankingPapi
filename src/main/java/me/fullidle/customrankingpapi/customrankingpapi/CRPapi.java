@@ -51,13 +51,6 @@ public class CRPapi extends PlaceholderExpansion {
             }
             return ranking.getRankingFormatInformation(i);
         }
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < ranking.getRankingVolume(); i++) {
-            builder.append(ranking.getRankingFormatInformation(i));
-            if (i != ranking.getRankingVolume()-1){
-                builder.append("\n");
-            }
-        }
-        return builder.toString();
+        return ranking.getNoDisconnectInformation();
     }
 }
