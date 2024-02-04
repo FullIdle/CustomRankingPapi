@@ -48,7 +48,7 @@ public class Ranking {
 
     public void ranking(){
         rankingList = Arrays.stream(Bukkit.getOfflinePlayers()).map(p ->
-                new PlayerValue(p, Integer.parseInt(
+                new PlayerValue(p, Double.parseDouble(
                         PlaceholderAPI.setPlaceholders(p, judgmentPapi).equalsIgnoreCase("")?
                                 "0":
                                 PlaceholderAPI.setPlaceholders(p, judgmentPapi))))
