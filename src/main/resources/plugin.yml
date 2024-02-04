@@ -1,0 +1,10 @@
+name: ${rootProject.name}
+main: ${group}
+version: ${version}
+api-version: 1.16
+depend:
+  - PlaceholderAPI
+commands:
+  customrankingpapi:
+    description: main cmd
+    aliases: [crpapi]

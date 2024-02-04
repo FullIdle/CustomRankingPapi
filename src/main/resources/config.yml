@@ -1,0 +1,13 @@
+ranking1:
+  ##这个名字是自定义的，可以有多个变量这里的完整变量是%customrankingpapi_ranking_0% #开启断开后变量后面需要加_{slot}!
+  disconnect: true
+  ##是否断开如果断开则变量为%customrankingpapi_ranking1_0%,#%customrankingpapi_ranking1_1%,如果是false则一个变量会把所有排名都排列好然后变量内会存在换行符
+  rankingVolume: 10
+  ##最多拍到第几位
+  reverseOrder: false
+  ##是否倒顺序排名(如果disconnect是true的话则该项无用!)
+  judgmentPapi: '%player_exp_to_level%'
+  ##以玩家的等级进行排名
+  format: '第 {ranking} 名 >> %player_name%'
+  ##改变量显示的内容格式唯一插件变量{ranking}
+  exceedRanking: '第 w 名 >> 无玩家'
