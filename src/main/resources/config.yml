@@ -10,4 +10,4 @@ ranking1:
   ##以玩家的等级进行排名
   format: '第 {ranking} 名 >> %player_name%'
   ##改变量显示的内容格式唯一插件变量{ranking}
-  exceedRanking: '第 w 名 >> 无玩家'
+  exceedRanking: '第 {ranking} 名 >> 无玩家'
