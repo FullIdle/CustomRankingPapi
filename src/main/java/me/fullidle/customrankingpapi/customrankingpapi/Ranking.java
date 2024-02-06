@@ -90,6 +90,9 @@ public class Ranking {
     }
 
     public static Ranking getInstance(String key){
-        return cache.computeIfAbsent(key, Ranking::new);
+        if (plugin.getConfig().getKeys(false).contains(key)){
+            return cache.computeIfAbsent(key, Ranking::new);
+        }
+        return null;
     }
 }

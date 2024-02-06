@@ -39,6 +39,10 @@ public class CRPapi extends PlaceholderExpansion {
         String[] split = params.split("_");
         final String paKey = split[0];
         final Ranking ranking = Ranking.getInstance(paKey);
+        if (ranking == null){
+            plugin.getServer().getConsoleSender().sendMessage("non-existent key:"+paKey);
+            return null;
+        }
         if (ranking.isDisconnect()){
             if (split.length != 2){
                 return null;
